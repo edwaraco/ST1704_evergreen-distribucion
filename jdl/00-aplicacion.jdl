@@ -1,0 +1,28 @@
+/**
+ * Configuración base de la aplicación Evergreen - Sistema de Distribución
+ *
+ * Este archivo contiene SOLO la configuración de la aplicación.
+ * Se aplica una única vez al inicializar el proyecto.
+ *
+ * Uso: jhipster jdl 00-aplicacion.jdl 01-hu1-catalogos.jdl
+ */
+
+application {
+    config {
+        baseName evergreen
+        applicationType monolith
+        packageName com.evergreen.distribucion
+        authenticationType jwt
+        databaseType sql
+        prodDatabaseType postgresql
+        devDatabaseType h2Disk
+        buildTool maven
+        clientFramework react
+        enableTranslation true
+        nativeLanguage es
+        languages [es, en]
+        testFrameworks [cypress]
+        enableSwaggerCodegen true
+    }
+}
+

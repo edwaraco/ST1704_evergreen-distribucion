@@ -1,0 +1,57 @@
+/**
+ * Historia de Usuario 2: Gestión de Pedidos
+ *
+ * Como operador del sistema de distribución
+ * Quiero gestionar pedidos asociando clientes, productos, canales y transportes
+ * Para coordinar el flujo de distribución de productos
+ *
+ * Entidades nuevas:
+ * - Pedido: Pedidos de clientes con sus productos asignados
+ *
+ * Dependencias: HU-1 (Catálogos base)
+ *
+ * NOTA: Este JDL solo contiene la entidad Pedido y sus relaciones.
+ * Las entidades de HU-1 ya deben existir en el proyecto.
+ */
+
+// ========== ENTIDAD NUEVA ==========
+
+entity Pedido {
+    identificador String required unique
+    fechaEntrada LocalDate required
+    fechaSalida LocalDate
+    estado String required maxlength(50)
+}
+
+// ========== RELACIONES ==========
+
+// Pedido tiene un Cliente (ManyToOne)
+relationship ManyToOne {
+    Pedido{cliente(nombre) required} to Cliente
+}
+
+// Pedido contiene múltiples Productos (ManyToMany)
+relationship ManyToMany {
+    Pedido{producto(nombre)} to Producto{pedido(identificador)}
+}
+
+// CanalComercializacion gestiona múltiples Pedidos (OneToMany)
+relationship OneToMany {
+    CanalComercializacion{pedido} to Pedido{canalComercializacion(nombre)}
+}
+
+// Transporte asignado a múltiples Pedidos (OneToMany)
+relationship OneToMany {
+    Transporte{pedido} to Pedido{transporte(identificador)}
+}
+
+// ========== OPCIONES ==========
+
+paginate Pedido with pagination
+
+dto Pedido with mapstruct
+
+service Pedido with serviceImpl
+
+filter Pedido
+

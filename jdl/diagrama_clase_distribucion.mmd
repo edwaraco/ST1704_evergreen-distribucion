@@ -1,0 +1,54 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#e1f5fe',
+    'primaryTextColor': '#2c3e50',
+    'primaryBorderColor': '#b3e5fc',
+    'lineColor': '#95a5a6',
+    'secondaryColor': '#f3e5f5',
+    'tertiaryColor': '#e8f5e9',
+    'mainBkg': '#ffffff',
+    'nodeBorder': '#d1d9e6',
+    'clusterBkg': '#fafafa'
+  }
+}}%%
+
+classDiagram
+    class Pedido {
+        +identificador
+        +fechaEntrada
+        +fechaSalida
+    }
+    class Producto {
+        +identificador
+        +fechaElaboracion
+    }
+    class Empaque {
+        +tipo
+        +tamaño
+        +cantidad
+        +tiempo
+    }
+    class Separacion {
+        +lote
+        +cantidad
+    }
+    class Transporte {
+    }
+    class TipoTarea {
+    }
+
+    %% Relaciones de Asociación
+    Pedido --> Cliente
+    Pedido --> Producto
+    CanalesComercializacion --> Pedido
+    Transporte --> Pedido
+    Pedido --> TipoTarea
+
+    %% Relaciones de Herencia (Especialización)
+    Acuatico --|> Transporte
+    Aereo --|> Transporte
+    Terrestre --|> Transporte
+    
+    Empaque --|> TipoTarea
+    Separacion --|> TipoTarea

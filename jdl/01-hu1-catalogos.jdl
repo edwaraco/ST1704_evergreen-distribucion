@@ -1,0 +1,72 @@
+/**
+ * Historia de Usuario 1: Gestión de Catálogos Base
+ *
+ * Como administrador del sistema de distribución
+ * Quiero gestionar los catálogos fundamentales (clientes, productos, canales y transportes)
+ * Para tener disponible la información base que usarán los pedidos
+ *
+ * Entidades:
+ * - Cliente: Clientes que realizan pedidos
+ * - Producto: Productos disponibles para distribución
+ * - CanalComercializacion: Canales por los que se reciben pedidos
+ * - Transporte: Vehículos disponibles para entrega
+ *
+ * Dependencias: Ninguna (historia base)
+ */
+
+// ========== ENUMERACIONES ==========
+
+enum TipoTransporte {
+    ACUATICO,
+    AEREO,
+    TERRESTRE
+}
+
+// ========== ENTIDADES ==========
+
+entity Cliente {
+    identificador String required unique
+    nombre String required maxlength(200)
+    email String pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+    telefono String maxlength(20)
+    direccion String maxlength(500)
+}
+
+entity Producto {
+    identificador String required unique
+    nombre String required maxlength(200)
+    descripcion String maxlength(1000)
+    fechaElaboracion LocalDate required
+    lote String maxlength(50)
+    cantidad Integer required min(1)
+    unidadMedida String maxlength(20)
+}
+
+entity CanalComercializacion {
+    identificador String required unique
+    nombre String required maxlength(100)
+    descripcion String maxlength(500)
+    activo Boolean required
+}
+
+entity Transporte {
+    identificador String required unique
+    tipoTransporte TipoTransporte required
+    matricula String maxlength(50)
+    capacidadKg Double min(0)
+    capacidadM3 Double min(0)
+    estado String required maxlength(50)
+    fechaAsignacion LocalDate
+}
+
+// ========== OPCIONES ==========
+
+paginate Cliente, Producto with pagination
+paginate CanalComercializacion, Transporte with infinite-scroll
+
+dto Cliente, Producto, CanalComercializacion, Transporte with mapstruct
+
+service Cliente, Producto, CanalComercializacion, Transporte with serviceImpl
+
+filter Cliente, Producto, Transporte
+

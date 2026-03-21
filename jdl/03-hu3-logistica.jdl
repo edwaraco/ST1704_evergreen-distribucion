@@ -1,0 +1,79 @@
+/**
+ * Historia de Usuario 3: Gestión de Tareas Logísticas
+ *
+ * Como operador logístico
+ * Quiero gestionar las tareas de empaque y separación asociadas a los pedidos
+ * Para controlar el proceso de preparación de los productos para entrega
+ *
+ * Entidades nuevas:
+ * - Empaque: Tareas de empaque de productos
+ * - Separacion: Tareas de separación de productos por lotes
+ *
+ * Dependencias: HU-2 (Pedidos)
+ *
+ * NOTA: Este JDL solo contiene las entidades de logística y sus relaciones.
+ * Las entidades de HU-1 y HU-2 ya deben existir en el proyecto.
+ */
+
+// ========== ENUMERACIONES NUEVAS ==========
+
+enum TipoEmpaque {
+    CAJA,
+    BOLSA,
+    CONTENEDOR,
+    PALLET,
+    OTRO
+}
+
+enum TamanioEmpaque {
+    PEQUENO,
+    MEDIANO,
+    GRANDE,
+    EXTRA_GRANDE
+}
+
+// ========== ENTIDADES NUEVAS ==========
+
+entity Empaque {
+    identificador String required unique
+    tipo TipoEmpaque required
+    tamanio TamanioEmpaque required
+    cantidad Integer required min(1)
+    tiempoMinutos Integer required min(0)
+    fechaRealizacion LocalDate
+    responsable String maxlength(200)
+    observaciones String maxlength(1000)
+}
+
+entity Separacion {
+    identificador String required unique
+    lote String required maxlength(50)
+    cantidad Integer required min(1)
+    fechaRealizacion LocalDate
+    ubicacion String maxlength(200)
+    responsable String maxlength(200)
+    observaciones String maxlength(1000)
+}
+
+// ========== RELACIONES ==========
+
+// Pedido puede tener múltiples tareas de Empaque
+relationship OneToMany {
+    Pedido{empaque} to Empaque{pedido(identificador) required}
+}
+
+// Pedido puede tener múltiples tareas de Separacion
+relationship OneToMany {
+    Pedido{separacion} to Separacion{pedido(identificador) required}
+}
+
+// ========== OPCIONES ==========
+
+paginate Empaque, Separacion with pagination
+
+dto Empaque, Separacion with mapstruct
+
+service Empaque, Separacion with serviceImpl
+
+filter Empaque, Separacion
+
