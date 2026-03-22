@@ -45,10 +45,10 @@ npm install --save-dev @playwright/test playwright-bdd @cucumber/cucumber
 ### Paso 2: Instalación de navegadores
 
 ```bash
-npx playwright install
+npx playwright install chromium
 ```
 
-Este comando descarga los navegadores necesarios (Chromium, Firefox y WebKit).
+Este comando descarga Chromium, el navegador utilizado para las pruebas E2E.
 
 ## Estructura de directorios
 
@@ -58,25 +58,30 @@ evergreen/
 │   ├── HU-1-gestion-catalogos.feature
 │   ├── HU-2-gestion-pedidos.feature
 │   └── HU-3-gestion-tareas-logisticas.feature
-├── e2e/
-│   ├── playwright.config.ts            # Configuración de Playwright
-│   ├── support/
-│   │   ├── fixtures.ts                 # Fixtures compartidos
-│   │   ├── hooks.ts                    # Hooks de Cucumber (Before/After)
-│   │   └── auth.ts                     # Helpers de autenticación
-│   ├── steps/
-│   │   ├── common.steps.ts             # Steps comunes
-│   │   ├── cliente.steps.ts            # Steps de Cliente
-│   │   ├── producto.steps.ts           # Steps de Producto
-│   │   ├── canal.steps.ts              # Steps de CanalComercializacion
-│   │   ├── transporte.steps.ts         # Steps de Transporte
-│   │   ├── pedido.steps.ts             # Steps de Pedido
-│   │   ├── empaque.steps.ts            # Steps de Empaque
-│   │   └── separacion.steps.ts         # Steps de Separacion
-│   ├── fixtures/
-│   │   └── test-data.json              # Datos de prueba
-│   └── reports/                        # Reportes de ejecución
-└── package.json
+│
+└── distribucion/                       # Proyecto JHipster
+    ├── e2e/                            # Pruebas E2E con Playwright
+    │   ├── playwright.config.ts        # Configuración de Playwright
+    │   ├── auth.setup.ts               # Setup de autenticación
+    │   ├── support/
+    │   │   ├── fixtures.ts             # Fixtures compartidos
+    │   │   ├── hooks.ts                # Hooks de Cucumber (Before/After)
+    │   │   └── auth.ts                 # Helpers de autenticación
+    │   ├── steps/
+    │   │   ├── common.steps.ts         # Steps comunes
+    │   │   ├── cliente.steps.ts        # Steps de Cliente
+    │   │   ├── producto.steps.ts       # Steps de Producto
+    │   │   ├── canal.steps.ts          # Steps de CanalComercializacion
+    │   │   ├── transporte.steps.ts     # Steps de Transporte
+    │   │   ├── pedido.steps.ts         # Steps de Pedido
+    │   │   ├── empaque.steps.ts        # Steps de Empaque
+    │   │   └── separacion.steps.ts     # Steps de Separacion
+    │   ├── fixtures/
+    │   │   └── test-data.json          # Datos de prueba
+    │   ├── reports/                    # Reportes de ejecución
+    │   └── .auth/                      # Storage state de autenticación
+    │       └── admin.json
+    └── package.json
 ```
 
 ## Configuración de Playwright con Cucumber
@@ -88,7 +93,7 @@ import { defineConfig, devices } from '@playwright/test';
 import { defineBddConfig } from 'playwright-bdd';
 
 const testDir = defineBddConfig({
-  features: '../features/**/*.feature',
+  features: '../../features/**/*.feature',
   steps: './steps/**/*.steps.ts',
 });
 
@@ -319,10 +324,10 @@ npx wait-on http://localhost:8080/management/health && npm run e2e
 
 ### Error: "Browser not found"
 
-Solución: Ejecutar la instalación de navegadores:
+Solución: Ejecutar la instalación de Chromium:
 
 ```bash
-npx playwright install
+npx playwright install chromium
 ```
 
 ## Referencias

@@ -154,30 +154,31 @@ evergreen/
 │   ├── HU-2-gestion-pedidos.feature
 │   └── HU-3-gestion-tareas-logisticas.feature
 │
-├── e2e/
-│   ├── playwright.config.ts
-│   ├── auth.setup.ts
-│   ├── steps/
-│   │   ├── common.steps.ts
-│   │   ├── catalogos.steps.ts
-│   │   ├── pedidos.steps.ts
-│   │   ├── empaque.steps.ts
-│   │   └── separacion.steps.ts
-│   ├── support/
-│   │   ├── auth.ts
-│   │   └── fixtures.ts
-│   ├── fixtures/
-│   │   └── test-data.json
-│   ├── reports/
-│   └── .auth/
-│       └── admin.json
-│
 ├── docs/
 │   ├── CONFIGURACION-PLAYWRIGHT.md
 │   ├── GUIA-IMPLEMENTACION-INCREMENTAL.md
 │   └── README-PROYECTO-INCREMENTAL.md
 │
 ├── distribucion/                    # Proyecto JHipster
+│   ├── e2e/                         # Pruebas E2E con Playwright
+│   │   ├── playwright.config.ts
+│   │   ├── auth.setup.ts
+│   │   ├── steps/
+│   │   │   ├── common.steps.ts
+│   │   │   ├── catalogos.steps.ts
+│   │   │   ├── pedidos.steps.ts
+│   │   │   ├── empaque.steps.ts
+│   │   │   └── separacion.steps.ts
+│   │   ├── support/
+│   │   │   ├── auth.ts
+│   │   │   └── fixtures.ts
+│   │   ├── fixtures/
+│   │   │   └── test-data.json
+│   │   ├── reports/
+│   │   └── .auth/
+│   │       └── admin.json
+│   ├── src/
+│   └── package.json
 │
 └── README.md
 ```
@@ -186,38 +187,38 @@ evergreen/
 
 ### Fase 0: Configuración inicial
 
-- Generar aplicación base con `jhipster jdl jdl/00-aplicacion.jdl`
+- Generar aplicación base con `jhipster jdl ../jdl/00-aplicacion.jdl` (desde `distribucion/`)
 - Instalar Playwright: `npm install --save-dev @playwright/test playwright-bdd`
 - Instalar navegadores: `npx playwright install`
-- Crear estructura de directorios E2E
-- Configurar `playwright.config.ts`
-- Implementar helpers de autenticación
-- Crear archivo de setup de autenticación
-- Agregar scripts al `package.json`
+- Crear estructura de directorios E2E en `distribucion/e2e/`
+- Configurar `distribucion/e2e/playwright.config.ts`
+- Implementar helpers de autenticación en `distribucion/e2e/support/auth.ts`
+- Crear archivo de setup en `distribucion/e2e/auth.setup.ts`
+- Agregar scripts al `distribucion/package.json`
 - Registrar commit inicial
 
 ### Fase 1: HU-1 (Catálogos)
 
-- Generar entidades con `jhipster jdl jdl/01-hu1-catalogos.jdl`
+- Generar entidades con `jhipster jdl ../jdl/01-hu1-catalogos.jdl` (desde `distribucion/`)
 - Compilar y arrancar la aplicación
 - Realizar verificación manual de operaciones CRUD
-- Implementar step definitions en `e2e/steps/catalogos.steps.ts`
+- Implementar step definitions en `distribucion/e2e/steps/catalogos.steps.ts`
 - Ejecutar pruebas E2E con `npm run e2e -- --grep "@HU-1"`
 - Registrar commit con tag `v0.1.0`
 
 ### Fase 2: HU-2 (Pedidos)
 
-- Generar entidad Pedido con `jhipster jdl jdl/02-hu2-pedidos.jdl`
+- Generar entidad Pedido con `jhipster jdl ../jdl/02-hu2-pedidos.jdl` (desde `distribucion/`)
 - Verificar relaciones con catálogos
-- Implementar step definitions de pedidos
+- Implementar step definitions en `distribucion/e2e/steps/pedidos.steps.ts`
 - Ejecutar suite de regresión (HU-1 + HU-2)
 - Registrar commit con tag `v0.2.0`
 
 ### Fase 3: HU-3 (Tareas logísticas)
 
-- Generar entidades con `jhipster jdl jdl/03-hu3-logistica.jdl`
+- Generar entidades con `jhipster jdl ../jdl/03-hu3-logistica.jdl` (desde `distribucion/`)
 - Verificar relaciones con pedidos
-- Implementar step definitions de empaque y separación
+- Implementar step definitions en `distribucion/e2e/steps/empaque.steps.ts` y `separacion.steps.ts`
 - Ejecutar suite completa de regresión
 - Registrar commit con tag `v1.0.0`
 - Realizar release final

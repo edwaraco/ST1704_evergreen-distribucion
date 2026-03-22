@@ -9,6 +9,12 @@ El repositorio se organizó de la siguiente manera:
 ```
 evergreen/
 ├── distribucion/                # Proyecto JHipster (código fuente)
+│   ├── e2e/                     # Pruebas E2E con Playwright
+│   │   ├── playwright.config.ts
+│   │   ├── steps/               # Step definitions
+│   │   └── support/             # Helpers y fixtures
+│   ├── src/
+│   └── package.json
 │
 ├── docker/                      # Configuración Docker para desarrollo
 │   ├── docker-compose.jhipster.yml
@@ -26,11 +32,6 @@ evergreen/
 │   ├── HU-1-gestion-catalogos.feature
 │   ├── HU-2-gestion-pedidos.feature
 │   └── HU-3-gestion-tareas-logisticas.feature
-│
-├── e2e/                         # Pruebas E2E con Playwright
-│   ├── playwright.config.ts
-│   ├── steps/                   # Step definitions
-│   └── support/                 # Helpers y fixtures
 │
 ├── docs/                        # Documentación del proyecto
 │

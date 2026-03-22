@@ -1,0 +1,23 @@
+{
+  "generator-jhipster": {
+    "applicationType": "monolith",
+    "authenticationType": "jwt",
+    "baseName": "evergreen",
+    "buildTool": "maven",
+    "clientFramework": "react",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "enableSwaggerCodegen": true,
+    "enableTranslation": true,
+    "entities": [],
+    "jhipsterVersion": "8.11.0",
+    "jwtSecretKey": "NDc5M2ZiNDJkOWMzMzc0N2EwOWE3MGNmNmVhYjhjMWNhN2RhYWY2ZDk5NTYwMTAwM2E2MTEzYjNhZjdmYTVmYzk1YmYzYjgzMGU3MTEwMTUwMGJkZjk0Nzk2Yzc0YzllNjJlOTk1MGM1Y2Y5MjZjMjZmZWE2MjAxZWNmYjNmMTc=",
+    "languages": ["es", "en"],
+    "monorepository": true,
+    "nativeLanguage": "es",
+    "packageName": "com.evergreen.distribucion",
+    "prodDatabaseType": "postgresql",
+    "skipCommitHook": true,
+    "testFrameworks": []
+  }
+}

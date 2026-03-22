@@ -50,8 +50,11 @@ La especificación BDD se encuentra en `features/HU-3-gestion-tareas-logisticas.
 
 #### Paso 0.1: Generación del proyecto base
 
+Desde el directorio `distribucion/`:
+
 ```bash
-jhipster jdl jdl/00-aplicacion.jdl
+cd /evergreen/distribucion
+jhipster jdl ../jdl/00-aplicacion.jdl
 ```
 
 El archivo `00-aplicacion.jdl` configura la aplicación sin Cypress:
@@ -78,7 +81,7 @@ application {
 
 ```bash
 npm install --save-dev @playwright/test playwright-bdd @cucumber/cucumber
-npx playwright install
+npx playwright install chromium
 ```
 
 #### Paso 0.3: Configuración de Playwright
@@ -100,6 +103,8 @@ Se crea el archivo `e2e/playwright.config.ts` según la documentación de config
 ```
 
 #### Paso 0.5: Crear estructura de directorios
+
+Desde el directorio `distribucion/`:
 
 ```bash
 mkdir -p e2e/steps e2e/support e2e/fixtures e2e/reports e2e/.auth
@@ -129,8 +134,13 @@ git commit -m "chore: configuración inicial con Playwright
 
 #### Paso 1.1: Generación de entidades
 
+Desde el directorio `distribucion/`:
+
 ```bash
-jhipster jdl jdl/01-hu1-catalogos.jdl --skip-install
+jhipster jdl ../jdl/01-hu1-catalogos.jdl --skip-install
+
+# Restaurar configuración de Playwright (si fue sobrescrita)
+node scripts/setup-e2e.js
 ```
 
 Este comando genera los siguientes artefactos:
@@ -223,8 +233,10 @@ git commit -m "feat(HU-1): Implementar gestión de catálogos base
 
 #### Paso 2.1: Generación de la entidad Pedido
 
+Desde el directorio `distribucion/`:
+
 ```bash
-jhipster jdl jdl/02-hu2-pedidos.jdl --skip-install
+jhipster jdl ../jdl/02-hu2-pedidos.jdl --skip-install
 ```
 
 JHipster detecta que las entidades Cliente, Producto, CanalComercializacion y Transporte existen previamente. En consecuencia, solo genera o actualiza los archivos relacionados con Pedido y actualiza las relaciones en las entidades existentes.
@@ -301,8 +313,10 @@ git commit -m "feat(HU-2): Implementar gestión de pedidos
 
 #### Paso 3.1: Generación de entidades
 
+Desde el directorio `distribucion/`:
+
 ```bash
-jhipster jdl jdl/03-hu3-logistica.jdl --skip-install
+jhipster jdl ../jdl/03-hu3-logistica.jdl --skip-install
 ```
 
 #### Paso 3.2: Recompilación y verificación
@@ -476,7 +490,7 @@ npx wait-on http://localhost:8080/management/health && npm run e2e
 Solución:
 
 ```bash
-npx playwright install
+npx playwright install chromium
 ```
 
 ### Error: "401 Unauthorized" en pruebas

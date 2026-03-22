@@ -15,6 +15,12 @@ distribucion/build/
 distribucion/.jhipster/
 distribucion/*.log
 
+# Playwright (archivos generados)
+distribucion/e2e/.auth/
+distribucion/e2e/reports/
+distribucion/test-results/
+distribucion/playwright-report/
+
 # Archivos temporales del sistema
 .DS_Store
 Thumbs.db

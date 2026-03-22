@@ -23,7 +23,6 @@ application {
         languages [es, en]
         testFrameworks []
         enableSwaggerCodegen true
-        skipGit true
     }
 }
 
