@@ -2,11 +2,18 @@
 # Evergreen - Sistema de Distribución
 # =============================================
 
-# Proyecto JHipster generado (se regenera desde JDL)
-evergreen/
-
 # Claude Code
 .claude/
+
+# Artefactos de build (dentro de distribucion/)
+distribucion/target/
+distribucion/node_modules/
+distribucion/.gradle/
+distribucion/build/
+
+# Archivos generados de JHipster (no personalizables)
+distribucion/.jhipster/
+distribucion/*.log
 
 # Archivos temporales del sistema
 .DS_Store

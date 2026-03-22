@@ -21,8 +21,9 @@ application {
         enableTranslation true
         nativeLanguage es
         languages [es, en]
-        testFrameworks [cypress]
+        testFrameworks []
         enableSwaggerCodegen true
+        skipGit true
     }
 }
 

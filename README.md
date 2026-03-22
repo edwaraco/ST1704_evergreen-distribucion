@@ -1,12 +1,16 @@
-# Evergreen - Sistema de Distribución
+# Evergreen - Sistema de distribución
 
-Sistema de gestión de distribución de productos construido con JHipster, usando un enfoque de desarrollo incremental basado en Historias de Usuario.
+Este repositorio contiene el código fuente del sistema de gestión de distribución de productos desarrollado con JHipster. El proyecto se construyó mediante un enfoque de desarrollo incremental basado en historias de usuario.
 
-## Estructura del Proyecto
+## Estructura del proyecto
+
+El repositorio se organizó de la siguiente manera:
 
 ```
-proyecto/
-├── docker/                      # Configuración Docker para JHipster
+evergreen/
+├── distribucion/                # Proyecto JHipster (código fuente)
+│
+├── docker/                      # Configuración Docker para desarrollo
 │   ├── docker-compose.jhipster.yml
 │   ├── Dockerfile.jhipster
 │   └── jhipster-shell.sh
@@ -15,47 +19,74 @@ proyecto/
 │   ├── 00-aplicacion.jdl        # Configuración base
 │   ├── 01-hu1-catalogos.jdl     # HU-1: Catálogos
 │   ├── 02-hu2-pedidos.jdl       # HU-2: Pedidos
-│   └── 03-hu3-logistica.jdl     # HU-3: Logística
+│   ├── 03-hu3-logistica.jdl     # HU-3: Logística
+│   └── modelo-completo.jdl      # Referencia del modelo completo
 │
 ├── features/                    # Especificaciones BDD (Gherkin)
 │   ├── HU-1-gestion-catalogos.feature
 │   ├── HU-2-gestion-pedidos.feature
 │   └── HU-3-gestion-tareas-logisticas.feature
 │
-├── diagrama_clase_distribucion.mmd
+├── e2e/                         # Pruebas E2E con Playwright
+│   ├── playwright.config.ts
+│   ├── steps/                   # Step definitions
+│   └── support/                 # Helpers y fixtures
+│
+├── docs/                        # Documentación del proyecto
+│
 └── README.md
 ```
 
-## Historias de Usuario
+## Historias de usuario
 
-| HU | Nombre | Entidades | Dependencias |
-|----|--------|-----------|--------------|
-| HU-1 | Gestión de Catálogos | Cliente, Producto, CanalComercializacion, Transporte | - |
-| HU-2 | Gestión de Pedidos | Pedido | HU-1 |
-| HU-3 | Tareas Logísticas | Empaque, Separacion | HU-2 |
+En la Tabla 1 se presentan las tres historias de usuario que conforman el alcance del sistema.
 
-## Flujo de Desarrollo Incremental
+**Tabla 1.** Historias de usuario del sistema de distribución.
 
-### Requisitos Previos
+| HU   | Nombre                 | Entidades                                            | Dependencias |
+|------|------------------------|------------------------------------------------------|--------------|
+| HU-1 | Gestión de catálogos   | Cliente, Producto, CanalComercializacion, Transporte | Ninguna      |
+| HU-2 | Gestión de pedidos     | Pedido                                               | HU-1         |
+| HU-3 | Tareas logísticas      | Empaque, Separacion                                  | HU-2         |
 
-- Java 17+
-- Node.js 18+
-- Docker (opcional, para BD PostgreSQL)
+## Desarrollo con Docker
 
-### Sprint 1: HU-1 - Catálogos Base
+### Levantar el entorno
+
+Para iniciar el entorno de desarrollo, se ejecutan los siguientes comandos desde el directorio raíz del proyecto:
 
 ```bash
-# Crear proyecto y generar entidades de catálogos
-mkdir evergreen && cd evergreen
+docker compose -f docker/docker-compose.jhipster.yml up -d
+docker exec -it jhipster-dev bash
+```
+
+### Estructura dentro del contenedor
+
+Una vez dentro del contenedor, los directorios se encuentran organizados de la siguiente forma:
+
+```
+/evergreen/
+├── distribucion/   # Proyecto JHipster
+├── jdl/            # Modelos JDL
+└── features/       # Especificaciones BDD
+```
+
+## Flujo de desarrollo incremental
+
+El desarrollo del sistema se dividió en tres sprints, cada uno correspondiente a una historia de usuario.
+
+### Sprint 1: HU-1 - Catálogos base
+
+```bash
+cd /evergreen/distribucion
+
+# Generación del proyecto con entidades de catálogos
 jhipster jdl ../jdl/00-aplicacion.jdl ../jdl/01-hu1-catalogos.jdl
 
-# Compilar y verificar
+# Compilación y verificación
 ./mvnw
 
-# Ejecutar tests
-./mvnw verify
-
-# Tag de versión
+# Registro de versión (desde el host)
 git add . && git commit -m "feat(HU-1): gestión de catálogos base"
 git tag v0.1.0
 ```
@@ -63,18 +94,15 @@ git tag v0.1.0
 ### Sprint 2: HU-2 - Pedidos
 
 ```bash
-cd evergreen
+cd /evergreen/distribucion
 
-# Aplicar entidad Pedido sobre proyecto existente
+# Aplicación de la entidad Pedido sobre el proyecto existente
 jhipster jdl ../jdl/02-hu2-pedidos.jdl
 
-# Compilar (genera nuevos changelogs Liquibase)
+# Compilación (genera nuevos changelogs de Liquibase)
 ./mvnw
 
-# Ejecutar tests
-./mvnw verify
-
-# Tag de versión
+# Registro de versión
 git add . && git commit -m "feat(HU-2): gestión de pedidos"
 git tag v0.2.0
 ```
@@ -82,62 +110,70 @@ git tag v0.2.0
 ### Sprint 3: HU-3 - Logística
 
 ```bash
-cd evergreen
+cd /evergreen/distribucion
 
-# Aplicar entidades de logística
+# Aplicación de entidades de logística
 jhipster jdl ../jdl/03-hu3-logistica.jdl
 
-# Compilar
+# Compilación
 ./mvnw
 
-# Ejecutar tests
-./mvnw verify
-
-# Tag de versión
+# Registro de versión
 git add . && git commit -m "feat(HU-3): tareas logísticas"
 git tag v1.0.0
 ```
 
-## Desarrollo con Docker
+## Pruebas BDD
+
+Los archivos `.feature` ubicados en el directorio `features/` contienen las especificaciones escritas en Gherkin.
+
+El proyecto utiliza Playwright como framework de pruebas E2E, configurado con `playwright-bdd` para la integración con Gherkin.
+
+### Configuración inicial
 
 ```bash
-# Levantar entorno de desarrollo con JHipster
-cd docker
-docker-compose -f docker-compose.jhipster.yml up -d
+cd /evergreen/distribucion
 
-# Acceder al shell de JHipster
-./jhipster-shell.sh
+# Instalación de Playwright y playwright-bdd
+npm install --save-dev @playwright/test playwright-bdd @cucumber/cucumber
+
+# Instalación de navegadores
+npx playwright install
 ```
 
-## Testing BDD
-
-Los archivos `.feature` en `features/` contienen las especificaciones en Gherkin.
-
-Para ejecutar tests E2E con Cypress + Cucumber:
+### Ejecución de pruebas
 
 ```bash
-cd evergreen
+# Ejecutar todas las pruebas
+npm run e2e
 
-# Instalar plugin Cucumber
-npm install --save-dev @badeball/cypress-cucumber-preprocessor
+# Ejecutar pruebas de una historia específica
+npm run e2e -- --grep "@HU-1"
 
-# Copiar features
-cp ../features/*.feature src/test/javascript/cypress/e2e/
+# Ejecutar con interfaz visual
+npm run e2e:headed
 
-# Ejecutar tests
-npm run e2e:cypress
+# Modo debug
+npm run e2e:debug
+
+# Ver reporte HTML
+npm run e2e:report
 ```
 
-## Migraciones de Base de Datos
+Para más detalles sobre la configuración de Playwright, consultar `docs/CONFIGURACION-PLAYWRIGHT.md`.
 
-JHipster usa Liquibase para migraciones. Cada vez que se aplica un JDL:
+## Migraciones de base de datos
 
-1. Se generan nuevos changesets para las entidades nuevas
-2. Los changesets anteriores NO se modifican
-3. Los datos existentes se preservan
+JHipster utiliza Liquibase para gestionar las migraciones de base de datos. Cada vez que se aplica un archivo JDL, el comportamiento es el siguiente:
+
+1. Se generan nuevos changesets para las entidades nuevas.
+2. Los changesets anteriores permanecen sin modificaciones.
+3. Los datos existentes se preservan.
+
+La estructura de los archivos de migración se encuentra en:
 
 ```
-src/main/resources/config/liquibase/changelog/
+distribucion/src/main/resources/config/liquibase/changelog/
 ├── 00000000000000_initial_schema.xml
 ├── YYYYMMDDHHMMSS_added_entity_Cliente.xml      # HU-1
 ├── YYYYMMDDHHMMSS_added_entity_Producto.xml     # HU-1
@@ -146,12 +182,17 @@ src/main/resources/config/liquibase/changelog/
 └── ...
 ```
 
-## Tecnologías
+## Tecnologías utilizadas
 
-- **Backend**: Spring Boot 3, Java 17
-- **Frontend**: React 18
-- **Base de datos**: PostgreSQL (prod), H2 (dev)
-- **Autenticación**: JWT
-- **Testing**: JUnit, Cypress, Gherkin/Cucumber
-- **Build**: Maven, npm
+El sistema se desarrolló con las siguientes tecnologías:
+
+- Spring Boot 3 y Java 21 para el backend
+- React 18 para el frontend
+- PostgreSQL como base de datos de producción y H2 para desarrollo
+- JWT para autenticación
+- JUnit para pruebas unitarias de backend
+- Playwright con playwright-bdd para pruebas E2E
+- Gherkin/Cucumber para especificaciones BDD
+- Maven y npm como herramientas de construcción
+- Docker para contenedores
 
