@@ -199,7 +199,8 @@ evergreen/
 
 ### Fase 1: HU-1 (Catálogos)
 
-- Generar entidades con `jhipster jdl ../jdl/01-hu1-catalogos.jdl` (desde `distribucion/`)
+- Generar entidades con `jhipster jdl ../jdl/01-hu1-catalogos.jdl --force --skip-install` (desde `distribucion/`)
+- Ejecutar `npm install` manualmente
 - Compilar y arrancar la aplicación
 - Realizar verificación manual de operaciones CRUD
 - Implementar step definitions en `distribucion/e2e/steps/catalogos.steps.ts`
@@ -208,7 +209,9 @@ evergreen/
 
 ### Fase 2: HU-2 (Pedidos)
 
-- Generar entidad Pedido con `jhipster jdl ../jdl/02-hu2-pedidos.jdl` (desde `distribucion/`)
+- Generar entidades con `jhipster jdl ../jdl/02-hu2-pedidos.jdl --force --skip-install` (desde `distribucion/`)
+- **Importante**: El JDL debe incluir todas las entidades en las opciones `dto`, `service`, `pagination` y `filter`
+- Ejecutar `npm install` manualmente
 - Verificar relaciones con catálogos
 - Implementar step definitions en `distribucion/e2e/steps/pedidos.steps.ts`
 - Ejecutar suite de regresión (HU-1 + HU-2)
@@ -216,7 +219,9 @@ evergreen/
 
 ### Fase 3: HU-3 (Tareas logísticas)
 
-- Generar entidades con `jhipster jdl ../jdl/03-hu3-logistica.jdl` (desde `distribucion/`)
+- Generar entidades con `jhipster jdl ../jdl/03-hu3-logistica.jdl --force --skip-install` (desde `distribucion/`)
+- **Importante**: El JDL debe incluir todas las entidades en las opciones `dto`, `service`, `pagination` y `filter`
+- Ejecutar `npm install` manualmente
 - Verificar relaciones con pedidos
 - Implementar step definitions en `distribucion/e2e/steps/empaque.steps.ts` y `separacion.steps.ts`
 - Ejecutar suite completa de regresión

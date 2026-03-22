@@ -2,6 +2,57 @@
 
 Este documento describe el proceso de construcción del sistema de distribución de forma incremental mediante tres historias de usuario. Cada historia cuenta con su modelo JDL, especificaciones Gherkin y pruebas E2E con Playwright.
 
+## Estrategia de generación con JHipster
+
+### Enfoque recomendado: JDL completo con --force
+
+El enfoque iterativo tradicional (generar solo entidades nuevas en cada historia) presenta problemas cuando existen relaciones bidireccionales entre entidades de diferentes historias. JHipster genera referencias cruzadas en DTOs y Mappers que pueden causar errores de compilación si no se configuran correctamente.
+
+**El enfoque recomendado consiste en:**
+
+1. **Cada JDL debe incluir todas las entidades** que necesita para sus relaciones, no solo las nuevas.
+2. **Usar `--force`** para sobrescribir archivos existentes sin confirmación interactiva.
+3. **Configurar todas las opciones** (dto, pagination, filter, service) para TODAS las entidades del JDL.
+
+### Reglas críticas para archivos JDL
+
+Al crear o modificar archivos JDL, se deben seguir estas reglas para evitar errores de compilación:
+
+1. **DTOs con MapStruct**: Si una entidad A tiene relación bidireccional con entidad B, ambas deben estar en la línea `dto ... with mapstruct`. De lo contrario, se generan referencias a DTOs inexistentes.
+
+   ```jdl
+   // INCORRECTO - Pedido tiene relación con Producto pero no genera PedidoDTO
+   dto Cliente, Producto, CanalComercializacion, Transporte with mapstruct
+
+   // CORRECTO - Todas las entidades con relaciones bidireccionales incluidas
+   dto Cliente, Producto, CanalComercializacion, Transporte, Pedido with mapstruct
+   ```
+
+2. **Paginación**: Una entidad no debe aparecer en múltiples líneas de paginación con diferentes tipos.
+
+   ```jdl
+   // INCORRECTO - Pedido aparece en ambas líneas
+   pagination Cliente, Producto, Pedido with pagination
+   pagination CanalComercializacion, Transporte, Pedido with infinite-scroll
+
+   // CORRECTO - Cada entidad en una sola línea
+   pagination Cliente, Producto, Pedido with pagination
+   pagination CanalComercializacion, Transporte with infinite-scroll
+   ```
+
+3. **Servicios y filtros**: Incluir todas las entidades que requieren estas características.
+
+### Comando de generación
+
+```bash
+cd distribucion
+jhipster jdl ../jdl/XX-huX-nombre.jdl --force --skip-install
+```
+
+Los flags utilizados:
+- `--force`: Sobrescribe archivos existentes sin preguntar, evita conflictos interactivos
+- `--skip-install`: Omite la instalación automática de dependencias npm (útil para ejecutar `npm install` manualmente después)
+
 ## Framework de pruebas E2E
 
 El proyecto utiliza Playwright como framework de pruebas E2E por las siguientes razones:
@@ -137,11 +188,10 @@ git commit -m "chore: configuración inicial con Playwright
 Desde el directorio `distribucion/`:
 
 ```bash
-jhipster jdl ../jdl/01-hu1-catalogos.jdl --skip-install
-
-# Restaurar configuración de Playwright (si fue sobrescrita)
-node scripts/setup-e2e.js
+jhipster jdl ../jdl/01-hu1-catalogos.jdl --force --skip-install
 ```
+
+Los flags `--force --skip-install` sobrescriben archivos existentes y omiten la instalación automática de npm. Si se han personalizado archivos de configuración de Playwright, hacer backup previo.
 
 Este comando genera los siguientes artefactos:
 
@@ -236,10 +286,15 @@ git commit -m "feat(HU-1): Implementar gestión de catálogos base
 Desde el directorio `distribucion/`:
 
 ```bash
-jhipster jdl ../jdl/02-hu2-pedidos.jdl --skip-install
+jhipster jdl ../jdl/02-hu2-pedidos.jdl --force --skip-install
 ```
 
-JHipster detecta que las entidades Cliente, Producto, CanalComercializacion y Transporte existen previamente. En consecuencia, solo genera o actualiza los archivos relacionados con Pedido y actualiza las relaciones en las entidades existentes.
+**Importante**: El archivo `02-hu2-pedidos.jdl` debe incluir:
+- Todas las entidades de HU-1 (Cliente, Producto, CanalComercializacion, Transporte) para definir las relaciones
+- La nueva entidad Pedido
+- Todas las entidades en las opciones de dto, service, pagination y filter
+
+El flag `--force` regenera todos los archivos, garantizando que las relaciones bidireccionales entre Pedido y las entidades existentes se configuren correctamente en DTOs y Mappers.
 
 #### Paso 2.2: Recompilación y verificación
 
@@ -316,8 +371,13 @@ git commit -m "feat(HU-2): Implementar gestión de pedidos
 Desde el directorio `distribucion/`:
 
 ```bash
-jhipster jdl ../jdl/03-hu3-logistica.jdl --skip-install
+jhipster jdl ../jdl/03-hu3-logistica.jdl --force --skip-install
 ```
+
+**Importante**: El archivo `03-hu3-logistica.jdl` debe incluir:
+- Todas las entidades de HU-1 y HU-2 necesarias para las relaciones
+- Las nuevas entidades Empaque y Separacion
+- Todas las entidades en las opciones de dto, service, pagination y filter
 
 #### Paso 3.2: Recompilación y verificación
 
@@ -449,6 +509,34 @@ Para cada historia de usuario se recomienda verificar los siguientes puntos:
 
 ## Solución de problemas comunes
 
+### Error: "cannot find symbol: class XxxDTO" en Mappers o DTOs
+
+Este error ocurre cuando existe una relación bidireccional entre entidades y una de ellas no está incluida en la línea `dto ... with mapstruct`.
+
+Ejemplo del error:
+```
+[ERROR] ProductoMapper.java: cannot find symbol
+  symbol:   class PedidoDTO
+  location: interface com.evergreen.distribucion.service.mapper.ProductoMapper
+```
+
+**Causa**: La relación ManyToMany bidireccional `Pedido{producto} to Producto{pedido}` genera referencias a `PedidoDTO` en `ProductoMapper`, pero `Pedido` no está en la configuración de DTOs.
+
+**Solución**: Agregar todas las entidades con relaciones bidireccionales a la línea de dto:
+
+```jdl
+// ANTES (incorrecto)
+dto Cliente, Producto, CanalComercializacion, Transporte with mapstruct
+
+// DESPUÉS (correcto)
+dto Cliente, Producto, CanalComercializacion, Transporte, Pedido with mapstruct
+```
+
+Luego regenerar:
+```bash
+jhipster jdl ../jdl/02-hu2-pedidos.jdl --force --skip-install
+```
+
 ### Error: "Liquibase changelog conflicts"
 
 Este error ocurre al intentar regenerar entidades que tienen changelogs diferentes.
@@ -459,8 +547,8 @@ Solución:
 # Opción 1: Eliminar base de datos H2
 rm -rf target/h2db/
 
-# Opción 2: Usar flag --force (con precaución)
-jhipster jdl historia-X.jdl --force
+# Opción 2: Usar flag --force
+jhipster jdl historia-X.jdl --force --skip-install
 ```
 
 ### Error: "Port 8080 already in use"

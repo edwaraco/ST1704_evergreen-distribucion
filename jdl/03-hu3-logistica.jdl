@@ -17,6 +17,14 @@
 
 // ========== ENUMERACIONES NUEVAS ==========
 
+// ========== ENUMERACIONES ==========
+
+enum TipoTransporte {
+    ACUATICO,
+    AEREO,
+    TERRESTRE
+}
+
 enum TipoEmpaque {
     CAJA,
     BOLSA,
@@ -32,30 +40,92 @@ enum TamanioEmpaque {
     EXTRA_GRANDE
 }
 
-// ========== ENTIDADES NUEVAS ==========
+// ========== ENTIDADES ==========
+
+entity Cliente {
+    identificador String required unique,
+    nombre String required maxlength(200),
+    email String pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/),
+    telefono String maxlength(20),
+    direccion String maxlength(500)
+}
+
+entity CanalComercializacion {
+    identificador String required unique,
+    nombre String required maxlength(100),
+    descripcion String maxlength(500),
+    activo Boolean required
+}
+
+entity Pedido {
+    identificador String required unique,
+    fechaEntrada LocalDate required,
+    fechaSalida LocalDate,
+    estado String required maxlength(50)
+}
+
+entity Producto {
+    identificador String required unique,
+    nombre String required maxlength(200),
+    descripcion String maxlength(1000),
+    fechaElaboracion LocalDate required,
+    lote String maxlength(50),
+    cantidad Integer required min(1),
+    unidadMedida String maxlength(20)
+}
+
+entity Transporte {
+    identificador String required unique,
+    tipoTransporte TipoTransporte required,
+    matricula String maxlength(50),
+    capacidadKg Double min(0),
+    capacidadM3 Double min(0),
+    estado String required maxlength(50),
+    fechaAsignacion LocalDate
+}
 
 entity Empaque {
-    identificador String required unique
-    tipo TipoEmpaque required
-    tamanio TamanioEmpaque required
-    cantidad Integer required min(1)
-    tiempoMinutos Integer required min(0)
-    fechaRealizacion LocalDate
-    responsable String maxlength(200)
+    identificador String required unique,
+    tipo TipoEmpaque required,
+    tamanio TamanioEmpaque required,
+    cantidad Integer required min(1),
+    tiempoMinutos Integer required min(0),
+    fechaRealizacion LocalDate,
+    responsable String maxlength(200),
     observaciones String maxlength(1000)
 }
 
 entity Separacion {
-    identificador String required unique
-    lote String required maxlength(50)
-    cantidad Integer required min(1)
-    fechaRealizacion LocalDate
-    ubicacion String maxlength(200)
-    responsable String maxlength(200)
+    identificador String required unique,
+    lote String required maxlength(50),
+    cantidad Integer required min(1),
+    fechaRealizacion LocalDate,
+    ubicacion String maxlength(200),
+    responsable String maxlength(200),
     observaciones String maxlength(1000)
 }
 
 // ========== RELACIONES ==========
+
+// Pedido tiene un Cliente
+relationship ManyToOne {
+    Pedido{cliente(nombre) required} to Cliente
+}
+
+// Pedido contiene múltiples Productos
+relationship ManyToMany {
+    Pedido{producto(nombre)} to Producto{pedido(identificador)}
+}
+
+// CanalComercializacion gestiona múltiples Pedidos
+relationship OneToMany {
+    CanalComercializacion{pedido} to Pedido{canalComercializacion(nombre)}
+}
+
+// Transporte asignado a múltiples Pedidos
+relationship OneToMany {
+    Transporte{pedido} to Pedido{transporte(identificador)}
+}
 
 // Pedido puede tener múltiples tareas de Empaque
 relationship OneToMany {
@@ -69,11 +139,21 @@ relationship OneToMany {
 
 // ========== OPCIONES ==========
 
+// Paginación para entidades con potencialmente muchos registros
+paginate Pedido, Producto, Cliente with pagination
+
+// Paginación infinita para entidades de catálogo
+paginate CanalComercializacion, Transporte with infinite-scroll
+
+// Sin paginación para entidades de tareas (normalmente pocas por pedido)
 paginate Empaque, Separacion with pagination
 
-dto Empaque, Separacion with mapstruct
+// Generar DTOs para todas las entidades
+dto * with mapstruct
 
-service Empaque, Separacion with serviceImpl
+// Generar servicios para todas las entidades
+service * with serviceImpl
 
-filter Empaque, Separacion
+// Filtros para búsquedas avanzadas
+filter Pedido, Producto, Cliente, Transporte
 
