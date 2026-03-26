@@ -205,7 +205,7 @@ evergreen/
 - Realizar verificación manual de operaciones CRUD
 - Implementar step definitions en `distribucion/e2e/steps/catalogos.steps.ts`
 - Ejecutar pruebas E2E con `npm run e2e -- --grep "@HU-1"`
-- Registrar commit con tag `v0.1.0`
+- Registrar commit con tag `feature/hu1`
 
 ### Fase 2: HU-2 (Pedidos)
 
@@ -215,7 +215,7 @@ evergreen/
 - Verificar relaciones con catálogos
 - Implementar step definitions en `distribucion/e2e/steps/pedidos.steps.ts`
 - Ejecutar suite de regresión (HU-1 + HU-2)
-- Registrar commit con tag `v0.2.0`
+- Registrar commit con tag `feature/hu2`
 
 ### Fase 3: HU-3 (Tareas logísticas)
 
@@ -225,7 +225,7 @@ evergreen/
 - Verificar relaciones con pedidos
 - Implementar step definitions en `distribucion/e2e/steps/empaque.steps.ts` y `separacion.steps.ts`
 - Ejecutar suite completa de regresión
-- Registrar commit con tag `v1.0.0`
+- Registrar commit con tag `feature/hu3`
 - Realizar release final
 
 ## Tecnologías utilizadas
