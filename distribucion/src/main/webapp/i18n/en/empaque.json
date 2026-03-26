@@ -1,0 +1,32 @@
+{
+  "evergreenApp": {
+    "empaque": {
+      "home": {
+        "title": "Empaques",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Empaque",
+        "createOrEditLabel": "Create or edit a Empaque",
+        "notFound": "No Empaques found"
+      },
+      "created": "A new Empaque is created with identifier {{ param }}",
+      "updated": "A Empaque is updated with identifier {{ param }}",
+      "deleted": "A Empaque is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Empaque {{ id }}?"
+      },
+      "detail": {
+        "title": "Empaque"
+      },
+      "id": "ID",
+      "identificador": "Identificador",
+      "tipo": "Tipo",
+      "tamanio": "Tamanio",
+      "cantidad": "Cantidad",
+      "tiempoMinutos": "Tiempo Minutos",
+      "fechaRealizacion": "Fecha Realizacion",
+      "responsable": "Responsable",
+      "observaciones": "Observaciones",
+      "pedido": "Pedido"
+    }
+  }
+}

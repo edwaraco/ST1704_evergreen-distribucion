@@ -1,0 +1,31 @@
+{
+  "evergreenApp": {
+    "separacion": {
+      "home": {
+        "title": "Separacions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Separacion",
+        "createOrEditLabel": "Create or edit a Separacion",
+        "notFound": "No Separacions found"
+      },
+      "created": "A new Separacion is created with identifier {{ param }}",
+      "updated": "A Separacion is updated with identifier {{ param }}",
+      "deleted": "A Separacion is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Separacion {{ id }}?"
+      },
+      "detail": {
+        "title": "Separacion"
+      },
+      "id": "ID",
+      "identificador": "Identificador",
+      "lote": "Lote",
+      "cantidad": "Cantidad",
+      "fechaRealizacion": "Fecha Realizacion",
+      "ubicacion": "Ubicacion",
+      "responsable": "Responsable",
+      "observaciones": "Observaciones",
+      "pedido": "Pedido"
+    }
+  }
+}

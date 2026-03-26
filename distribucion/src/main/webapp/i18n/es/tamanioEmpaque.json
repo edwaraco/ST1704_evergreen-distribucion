@@ -1,0 +1,11 @@
+{
+  "evergreenApp": {
+    "TamanioEmpaque": {
+      "null": "",
+      "PEQUENO": "PEQUENO",
+      "MEDIANO": "MEDIANO",
+      "GRANDE": "GRANDE",
+      "EXTRA_GRANDE": "EXTRA_GRANDE"
+    }
+  }
+}

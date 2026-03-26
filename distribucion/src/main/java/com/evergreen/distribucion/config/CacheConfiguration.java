@@ -50,6 +50,19 @@ public class CacheConfiguration {
             createCache(cm, com.evergreen.distribucion.domain.User.class.getName());
             createCache(cm, com.evergreen.distribucion.domain.Authority.class.getName());
             createCache(cm, com.evergreen.distribucion.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.evergreen.distribucion.domain.Cliente.class.getName());
+            createCache(cm, com.evergreen.distribucion.domain.CanalComercializacion.class.getName());
+            createCache(cm, com.evergreen.distribucion.domain.CanalComercializacion.class.getName() + ".pedidos");
+            createCache(cm, com.evergreen.distribucion.domain.Pedido.class.getName());
+            createCache(cm, com.evergreen.distribucion.domain.Pedido.class.getName() + ".empaques");
+            createCache(cm, com.evergreen.distribucion.domain.Pedido.class.getName() + ".separacions");
+            createCache(cm, com.evergreen.distribucion.domain.Pedido.class.getName() + ".productos");
+            createCache(cm, com.evergreen.distribucion.domain.Producto.class.getName());
+            createCache(cm, com.evergreen.distribucion.domain.Producto.class.getName() + ".pedidos");
+            createCache(cm, com.evergreen.distribucion.domain.Transporte.class.getName());
+            createCache(cm, com.evergreen.distribucion.domain.Transporte.class.getName() + ".pedidos");
+            createCache(cm, com.evergreen.distribucion.domain.Empaque.class.getName());
+            createCache(cm, com.evergreen.distribucion.domain.Separacion.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
