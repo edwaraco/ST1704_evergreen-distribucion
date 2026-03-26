@@ -31,6 +31,13 @@ services:
     working_dir: /evergreen
     stdin_open: true
     tty: true
+    ports:
+      # Spring Boot application
+      - "8080:8080"
+      # Webpack dev server (npm start)
+      - "9000:9000"
+      # BrowserSync
+      - "9060:9060"
     # Security options - prevent privilege escalation
     security_opt:
       - no-new-privileges:true

@@ -9,7 +9,8 @@ Este documento recopila las lecciones aprendidas y soluciones a problemas comune
 3. [Rendimiento lento con node_modules y Webpack](#3-rendimiento-lento-con-node_modules-y-webpack)
 4. [JHipster descarga Node.js aunque ya existe en el contenedor](#4-jhipster-descarga-nodejs-aunque-ya-existe-en-el-contenedor)
 5. [Permisos de root en node_modules](#5-permisos-de-root-en-node_modules)
-6. [Configuración preventiva recomendada](#6-configuración-preventiva-recomendada)
+6. [No se puede acceder a la aplicación desde Windows](#6-no-se-puede-acceder-a-la-aplicación-desde-windows)
+7. [Configuración preventiva recomendada](#7-configuración-preventiva-recomendada)
 
 ---
 
@@ -245,7 +246,63 @@ USER jhipster
 
 ---
 
-## 6. Configuración preventiva recomendada
+## 6. No se puede acceder a la aplicación desde Windows
+
+### Síntoma
+
+Al intentar acceder a la aplicación JHipster desde el navegador en Windows usando la IP interna del contenedor, la conexión falla:
+
+```
+http://172.29.0.2:8080/  → ERR_CONNECTION_TIMED_OUT
+```
+
+### Causa
+
+Las IPs internas de la red bridge de Docker (`172.29.x.x`) **no son accesibles** desde el host Windows. Docker Desktop usa una máquina virtual (WSL2 o Hyper-V) para ejecutar los contenedores, y las redes bridge están aisladas dentro de esa VM.
+
+A diferencia de Linux (donde las redes bridge sí son accesibles desde el host), en Windows es necesario exponer los puertos explícitamente.
+
+### Solución
+
+Agregar la sección `ports` en el `docker-compose.jhipster.yml`:
+
+```yaml
+services:
+  jhipster-dev:
+    # ... configuración existente ...
+    ports:
+      # Spring Boot application
+      - "8080:8080"
+      # Webpack dev server (npm start)
+      - "9000:9000"
+      # BrowserSync
+      - "9060:9060"
+```
+
+Luego reiniciar el contenedor:
+
+```bash
+docker compose -f docker/docker-compose.jhipster.yml down
+docker compose -f docker/docker-compose.jhipster.yml up -d
+```
+
+### Acceso correcto
+
+Después de exponer los puertos, acceder usando `localhost`:
+
+| Servicio | URL |
+|----------|-----|
+| Aplicación Spring Boot | http://localhost:8080 |
+| Webpack dev server | http://localhost:9000 |
+| BrowserSync | http://localhost:9060 |
+
+### Nota
+
+Nunca uses la IP interna del contenedor (`172.x.x.x`) desde Windows. Siempre usa `localhost` con los puertos mapeados.
+
+---
+
+## 7. Configuración preventiva recomendada
 
 ### Archivo .gitattributes
 
@@ -280,6 +337,11 @@ services:
       context: .
       dockerfile: Dockerfile.jhipster
     container_name: jhipster-dev
+    ports:
+      # Exponer puertos para acceso desde Windows
+      - "8080:8080"   # Spring Boot
+      - "9000:9000"   # Webpack dev server
+      - "9060:9060"   # BrowserSync
     volumes:
       # Proyecto (bind mount)
       - ../:/evergreen:rw
