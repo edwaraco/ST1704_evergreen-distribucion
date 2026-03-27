@@ -50,6 +50,10 @@ public class CacheConfiguration {
             createCache(cm, com.evergreen.distribucion.domain.User.class.getName());
             createCache(cm, com.evergreen.distribucion.domain.Authority.class.getName());
             createCache(cm, com.evergreen.distribucion.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.evergreen.distribucion.domain.Cliente.class.getName());
+            createCache(cm, com.evergreen.distribucion.domain.Producto.class.getName());
+            createCache(cm, com.evergreen.distribucion.domain.CanalComercializacion.class.getName());
+            createCache(cm, com.evergreen.distribucion.domain.Transporte.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

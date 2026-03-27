@@ -1,0 +1,27 @@
+{
+  "evergreenApp": {
+    "canalComercializacion": {
+      "home": {
+        "title": "Canal Comercializacions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Canal Comercializacion",
+        "createOrEditLabel": "Create or edit a Canal Comercializacion",
+        "notFound": "No Canal Comercializacions found"
+      },
+      "created": "A new Canal Comercializacion is created with identifier {{ param }}",
+      "updated": "A Canal Comercializacion is updated with identifier {{ param }}",
+      "deleted": "A Canal Comercializacion is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Canal Comercializacion {{ id }}?"
+      },
+      "detail": {
+        "title": "Canal Comercializacion"
+      },
+      "id": "ID",
+      "identificador": "Identificador",
+      "nombre": "Nombre",
+      "descripcion": "Descripcion",
+      "activo": "Activo"
+    }
+  }
+}
