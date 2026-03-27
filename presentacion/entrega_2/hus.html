@@ -826,6 +826,12 @@ mkdir -p e2e/steps e2e/support \
   cantidad         <span class="val">Integer</span>   required min(1)
   unidadMedida     <span class="val">String</span>    maxlength(20)
 }
+<span class="kw">entity</span> CanalComercializacion {
+  identificador <span class="val">String</span> required unique
+  nombre        <span class="val">String</span> required maxlength(100)
+  descripcion   <span class="val">String</span> maxlength(500)
+  activo        <span class="val">Boolean</span> required
+}
 <span class="kw">enum</span> TipoTransporte {
   ACUATICO, AEREO, TERRESTRE
 }
