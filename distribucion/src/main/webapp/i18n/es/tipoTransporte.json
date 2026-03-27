@@ -1,0 +1,10 @@
+{
+  "evergreenApp": {
+    "TipoTransporte": {
+      "null": "",
+      "ACUATICO": "ACUATICO",
+      "AEREO": "AEREO",
+      "TERRESTRE": "TERRESTRE"
+    }
+  }
+}

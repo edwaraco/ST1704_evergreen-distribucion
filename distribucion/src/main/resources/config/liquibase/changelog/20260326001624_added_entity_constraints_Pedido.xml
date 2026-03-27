@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity Pedido.
+    -->
+    <changeSet id="20260326001624-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="cliente_id"
+                                 baseTableName="pedido"
+                                 constraintName="fk_pedido__cliente_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="cliente"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="pedido_id"
+                                 baseTableName="rel_pedido__producto"
+                                 constraintName="fk_rel_pedido__producto__pedido_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="pedido"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="producto_id"
+                                 baseTableName="rel_pedido__producto"
+                                 constraintName="fk_rel_pedido__producto__producto_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="producto"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="canal_comercializacion_id"
+                                 baseTableName="pedido"
+                                 constraintName="fk_pedido__canal_comercializacion_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="canal_comercializacion"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="transporte_id"
+                                 baseTableName="pedido"
+                                 constraintName="fk_pedido__transporte_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="transporte"
+                                 />
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,31 @@
+{
+  "evergreenApp": {
+    "transporte": {
+      "home": {
+        "title": "Transportes",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Transporte",
+        "createOrEditLabel": "Crear o editar Transporte",
+        "notFound": "Ningún Transportes encontrado"
+      },
+      "created": "Un nuevo Transporte ha sido creado con el identificador {{ param }}",
+      "updated": "Un Transporte ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Transporte ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Transporte {{ id }}?"
+      },
+      "detail": {
+        "title": "Transporte"
+      },
+      "id": "ID",
+      "identificador": "Identificador",
+      "tipoTransporte": "Tipo Transporte",
+      "matricula": "Matricula",
+      "capacidadKg": "Capacidad Kg",
+      "capacidadM3": "Capacidad M 3",
+      "estado": "Estado",
+      "fechaAsignacion": "Fecha Asignacion",
+      "pedido": "Pedido"
+    }
+  }
+}
