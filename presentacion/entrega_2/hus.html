@@ -438,6 +438,32 @@
       font-family: var(--mono); font-size: 9px; font-weight: 500;
       padding: 1.5mm 4mm; border-radius: 3px; letter-spacing: 1px;
     }
+
+    /* ── REFERENCIAS ── */
+    .ref-item {
+      display: flex; gap: 2mm; padding: 1.5mm 0;
+      border-bottom: 1px solid var(--gray2);
+    }
+    .ref-item:last-child { border-bottom: none; }
+    .ref-num {
+      font-family: var(--mono); font-weight: 600;
+      color: var(--accent); min-width: 22px; flex-shrink: 0;
+    }
+    .ref-text { color: #2a2520; text-align: justify; }
+    .ref-text a { text-decoration: none; }
+    .ref-text a:hover { text-decoration: underline; }
+
+    /* ── CITAS IEEE (superíndices) ── */
+    sup {
+      font-family: var(--mono);
+      font-size: 7px;
+      color: var(--accent);
+      font-weight: 600;
+      vertical-align: super;
+      margin-left: 0.5px;
+    }
+    sup a { color: var(--accent); text-decoration: none; }
+    sup a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -447,7 +473,7 @@
 <!-- Controles de navegación -->
 <div class="nav-controls no-print">
   <button class="nav-btn" id="nav-prev" onclick="navigateSlide(-1)" title="Anterior (←)">←</button>
-  <span class="nav-indicator" id="nav-indicator">1 / 20</span>
+  <span class="nav-indicator" id="nav-indicator">1 / 22</span>
   <button class="nav-btn" id="nav-next" onclick="navigateSlide(1)" title="Siguiente (→)">→</button>
 </div>
 
@@ -489,7 +515,9 @@
           <span>04</span>Desarrollo HU2 - Gestión de pedidos<br>
           <span>05</span>Desarrollo HU3 - Tareas logísticas<br>
           <span>06</span>Lecciones aprendidas (Windows)<br>
-          <span>07</span>Conclusiones
+          <span>07</span>Evaluación comparativa<br>
+          <span>08</span>Conclusiones<br>
+          <span>09</span>Referencias
         </div>
       </div>
       <div class="cover-info-block" style="margin-top:2mm;">
@@ -508,7 +536,7 @@
     <div class="section-tag">Sección 01</div>
     <div class="section-accent"></div>
     <div class="section-title">Demo</div>
-    <div class="section-desc">Resultado generado con JHipster: aplicación Evergreen operativa con las 7 entidades del macroproceso de distribución, autenticación JWT, interfaz React y base de datos H2.</div>
+    <div class="section-desc">Demostración del ciclo completo de generación con JHipster<sup>[1]</sup>: importación del modelo JDL<sup>[3]</sup> de la HU-1, inicio de sesión con autenticación JWT, navegación por las entidades del catálogo base (Cliente, Producto, Canal de Comercialización y Transporte) y ejecución de operaciones CRUD con datos de prueba generados automáticamente.</div>
     <div style="margin-top:4mm;">
       <span class="hu-badge">Evergreen - Macroproceso de distribución</span>
     </div>
@@ -532,10 +560,11 @@
       <!-- Col izquierda: contexto -->
       <div style="display:flex;flex-direction:column;gap:3mm;">
         <div class="slide-h2">¿Qué vamos a ver?</div>
+        <p class="slide-p" style="font-size:10.5px;margin-bottom:1mm;">El video muestra el flujo completo de generación y uso de la aplicación: desde la importación del modelo JDL hasta la navegación por las entidades generadas con operaciones CRUD funcionales.</p>
         <div class="step-list">
           <div class="step-item">
             <div class="step-num">1</div>
-            <div class="step-text" style="font-size:12.5px;"><strong>Generación del proyecto</strong> importando el archivo JDL de la HU-1 con JHipster.</div>
+            <div class="step-text" style="font-size:12.5px;"><strong>Generación del proyecto</strong> importando el archivo JDL<sup>[3]</sup> de la HU-1 con JHipster<sup>[1]</sup>.</div>
           </div>
           <div class="step-item">
             <div class="step-num">2</div>
@@ -643,7 +672,7 @@ cd    /evergreen/distribucion
           </div>
           <div class="step-item">
             <div class="step-num">3</div>
-            <div class="step-text"><strong>JHipster CLI</strong> — instalado globalmente vía npm</div>
+            <div class="step-text"><strong>JHipster CLI</strong><sup>[1]</sup> — instalado globalmente vía npm</div>
           </div>
           <div class="step-item">
             <div class="step-num">4</div>
@@ -738,7 +767,7 @@ mkdir -p e2e/steps e2e/support \
         </div>
         <div class="card card-gold">
           <div class="card-title">Convención JDL único</div>
-          <p class="slide-p">Los archivos JDL son <strong>acumulativos</strong>: cada HU incorpora las entidades anteriores más las nuevas, evitando conflictos de relaciones bidireccionales al regenerar.</p>
+          <p class="slide-p">Los archivos JDL<sup>[3]</sup> son <strong>acumulativos</strong>: cada HU incorpora las entidades anteriores más las nuevas, evitando conflictos de relaciones bidireccionales al regenerar.</p>
         </div>
       </div>
     </div>
@@ -808,7 +837,7 @@ mkdir -p e2e/steps e2e/support \
       </div>
       <!-- Col 2: JDL -->
       <div style="display:flex;flex-direction:column;gap:3mm;">
-        <div class="slide-h2">Extracto JDL - HU1</div>
+        <div class="slide-h2">Extracto JDL<sup>[3]</sup> - HU1</div>
         <div class="code-block" style="font-size:8px;flex:1;">
 <pre>
 <span class="kw">entity</span> Cliente {
@@ -846,7 +875,7 @@ mkdir -p e2e/steps e2e/support \
       </div>
       <!-- Col 3: diagrama JDL -->
       <div style="display:flex;flex-direction:column;gap:2mm;">
-        <div class="slide-h2">Diagrama JDL - HU1</div>
+        <div class="slide-h2">Diagrama JDL<sup>[2]</sup> - HU1</div>
         <div class="jdl-img-zone has-image" id="zone-hu1">
           <div class="zone-badge">HU-1</div>
           <img class="zone-preview" src="hu_1.png" alt="Diagrama JDL HU-1">
@@ -1014,13 +1043,13 @@ npm run e2e
           <div class="approach-desc">Un canal o transporte puede estar asociado a múltiples pedidos. La FK queda en la tabla <code style="font-family:var(--mono);">PEDIDO</code>.</div>
         </div>
         <div class="warn-block">
-          <div class="warn-label">⚠ Restricción JDL</div>
+          <div class="warn-label">⚠ Restricción JDL<sup>[3]</sup></div>
           <div class="warn-text">Las relaciones bidireccionales requieren que <strong>todas las entidades involucradas</strong> estén en el mismo archivo JDL.</div>
         </div>
       </div>
       <!-- Col 3: diagrama JDL -->
       <div style="display:flex;flex-direction:column;gap:2mm;">
-        <div class="slide-h2">Diagrama JDL - HU2</div>
+        <div class="slide-h2">Diagrama JDL<sup>[2]</sup> - HU2</div>
         <div class="jdl-img-zone has-image" id="zone-hu2">
           <div class="zone-badge">HU-2</div>
           <img class="zone-preview" src="hu_2.png" alt="Diagrama JDL HU-2">
@@ -1147,7 +1176,7 @@ npm run e2e
       <div style="display:grid;grid-template-columns:1fr 2fr;gap:5mm;flex:1;">
         <!-- Col 1: JDL + Características -->
         <div style="display:flex;flex-direction:column;gap:3mm;">
-          <div class="slide-h2">Definición JDL - HU3</div>
+          <div class="slide-h2">Definición JDL<sup>[3]</sup> - HU3</div>
           <div class="code-block" style="font-size:8px;">
 <pre>
 <span class="kw">enum</span> TipoEmpaque {
@@ -1192,7 +1221,7 @@ npm run e2e
         </div>
         <!-- Col 2: Diagrama JDL (más amplio) -->
         <div style="display:flex;flex-direction:column;gap:2mm;">
-          <div class="slide-h2">Diagrama JDL - HU3</div>
+          <div class="slide-h2">Diagrama JDL<sup>[2]</sup> - HU3</div>
           <div class="jdl-img-zone has-image" id="zone-hu3" style="flex:1;min-height:80mm;">
             <div class="zone-badge">HU-3</div>
             <img class="zone-preview" src="hu_3.png" alt="Diagrama JDL HU-3">
@@ -1380,7 +1409,7 @@ npm run e2e
         <div class="concl-num">1</div>
         <div class="concl-body">
           <div class="concl-title">JDL único y acumulativo</div>
-          <div class="concl-text">No es viable usar archivos JDL separados por HU cuando existen relaciones bidireccionales. El archivo <code style="font-family:var(--mono);">modelo-completo.jdl</code> creció con cada historia evitando conflictos de regeneración.</div>
+          <div class="concl-text">No es viable usar archivos JDL<sup>[3]</sup> separados por HU cuando existen relaciones bidireccionales. El archivo <code style="font-family:var(--mono);">modelo-completo.jdl</code> creció con cada historia evitando conflictos de regeneración.</div>
         </div>
       </div>
       <div class="concl-item">
@@ -1408,14 +1437,14 @@ npm run e2e
         <div class="concl-num">5</div>
         <div class="concl-body">
           <div class="concl-title">Java 21 en imagen Docker</div>
-          <div class="concl-text">Las imágenes Docker oficiales de JHipster incluían Java 17, incompatible con JHipster 8.x. Se construyó una imagen personalizada basada en Eclipse Temurin JDK 21.</div>
+          <div class="concl-text">Las imágenes Docker oficiales de JHipster<sup>[1]</sup> incluían Java 17, incompatible con JHipster 8.x. Se construyó una imagen personalizada basada en Eclipse Temurin JDK 21.</div>
         </div>
       </div>
       <div class="concl-item">
         <div class="concl-num">6</div>
         <div class="concl-body">
           <div class="concl-title">Linux preferido sobre Windows</div>
-          <div class="concl-text">JHipster es funcional en Windows pero su ejecución via Docker requiere configuración adicional de volúmenes, permisos y red. Linux ofrece un comportamiento más predecible y mejor rendimiento.</div>
+          <div class="concl-text">JHipster<sup>[1]</sup> es funcional en Windows pero su ejecución via Docker requiere configuración adicional de volúmenes, permisos y red. Linux ofrece un comportamiento más predecible y mejor rendimiento.</div>
         </div>
       </div>
     </div>
@@ -1427,26 +1456,161 @@ npm run e2e
 </div>
 
 <!-- ══════════════════════════════════════════════════════════
-     SLIDE 18 - DIVISOR SECCIÓN 6: CONCLUSIONES
+     SLIDE 18 - EVALUACIÓN COMPARATIVA CUANTITATIVA
+══════════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-header">
+    <div class="slide-header-title">Evaluación comparativa</div>
+    <div class="slide-header-accent"></div>
+    <div class="slide-header-num">19</div>
+  </div>
+  <div class="slide-body">
+    <div class="slide-section-tag">Sección 06 - Justificación de la herramienta</div>
+    <div class="slide-h1">Evaluación cuantitativa de herramientas</div>
+    <p class="slide-p" style="margin-bottom:2mm;">Análisis comparativo basado en 7 criterios derivados de los requisitos del proyecto. Escala: <strong>1</strong> = No cumple · <strong>3</strong> = Cumple con limitaciones · <strong>5</strong> = Cumple plenamente.</p>
+    <table class="mini-table" style="font-size:9.5px;">
+      <thead>
+        <tr>
+          <th style="min-width:85px;">Criterio</th>
+          <th style="text-align:center;width:40px;">Peso</th>
+          <th style="text-align:center;background:var(--gold);color:var(--navy);">JHipster<sup style="color:var(--navy);">[1]</sup></th>
+          <th style="text-align:center;">Spring Initializr<sup>[5]</sup></th>
+          <th style="text-align:center;">Bootify.io<sup>[6]</sup></th>
+          <th style="text-align:center;">Yeoman<sup>[7]</sup></th>
+          <th style="text-align:center;">Telosys<sup>[8]</sup></th>
+          <th style="text-align:center;">Mendix<sup>[9]</sup>/ OutSys<sup>[10]</sup></th>
+          <th style="text-align:center;">Node-RED<sup>[11]</sup></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ingeniería Dirigida por Modelos (MDE)</td>
+          <td style="text-align:center;font-weight:600;">20%</td>
+          <td style="text-align:center;background:rgba(232,168,56,.15);font-weight:700;color:var(--navy);">4</td>
+          <td style="text-align:center;">2</td>
+          <td style="text-align:center;">3</td>
+          <td style="text-align:center;">1</td>
+          <td style="text-align:center;">3</td>
+          <td style="text-align:center;">3</td>
+          <td style="text-align:center;">1</td>
+        </tr>
+        <tr>
+          <td>Factoría de Software (SF)</td>
+          <td style="text-align:center;font-weight:600;">15%</td>
+          <td style="text-align:center;background:rgba(232,168,56,.15);font-weight:700;color:var(--navy);">4</td>
+          <td style="text-align:center;">2</td>
+          <td style="text-align:center;">3</td>
+          <td style="text-align:center;">3</td>
+          <td style="text-align:center;">2</td>
+          <td style="text-align:center;">3</td>
+          <td style="text-align:center;">2</td>
+        </tr>
+        <tr>
+          <td>Metaprogramación (Meta-P)</td>
+          <td style="text-align:center;font-weight:600;">10%</td>
+          <td style="text-align:center;background:rgba(232,168,56,.15);font-weight:700;color:var(--navy);">3</td>
+          <td style="text-align:center;">1</td>
+          <td style="text-align:center;">2</td>
+          <td style="text-align:center;">2</td>
+          <td style="text-align:center;">3</td>
+          <td style="text-align:center;">1</td>
+          <td style="text-align:center;">1</td>
+        </tr>
+        <tr>
+          <td>Líneas de Producto de Software (SPL)</td>
+          <td style="text-align:center;font-weight:600;">10%</td>
+          <td style="text-align:center;background:rgba(232,168,56,.15);font-weight:700;color:var(--navy);">3</td>
+          <td style="text-align:center;">1</td>
+          <td style="text-align:center;">2</td>
+          <td style="text-align:center;">2</td>
+          <td style="text-align:center;">2</td>
+          <td style="text-align:center;">2</td>
+          <td style="text-align:center;">1</td>
+        </tr>
+        <tr>
+          <td>Cobertura full-stack (backend + frontend + BD + pruebas)</td>
+          <td style="text-align:center;font-weight:600;">20%</td>
+          <td style="text-align:center;background:rgba(232,168,56,.15);font-weight:700;color:var(--navy);">5</td>
+          <td style="text-align:center;">2</td>
+          <td style="text-align:center;">4</td>
+          <td style="text-align:center;">2</td>
+          <td style="text-align:center;">1</td>
+          <td style="text-align:center;">4</td>
+          <td style="text-align:center;">1</td>
+        </tr>
+        <tr>
+          <td>Modelo de licenciamiento (gratuito y abierto)</td>
+          <td style="text-align:center;font-weight:600;">15%</td>
+          <td style="text-align:center;background:rgba(232,168,56,.15);font-weight:700;color:var(--navy);">5</td>
+          <td style="text-align:center;">5</td>
+          <td style="text-align:center;">2</td>
+          <td style="text-align:center;">5</td>
+          <td style="text-align:center;">5</td>
+          <td style="text-align:center;">1</td>
+          <td style="text-align:center;">5</td>
+        </tr>
+        <tr>
+          <td>Soporte nativo para BDD/TDD/ATDD</td>
+          <td style="text-align:center;font-weight:600;">10%</td>
+          <td style="text-align:center;background:rgba(232,168,56,.15);font-weight:700;color:var(--navy);">2</td>
+          <td style="text-align:center;">1</td>
+          <td style="text-align:center;">1</td>
+          <td style="text-align:center;">1</td>
+          <td style="text-align:center;">1</td>
+          <td style="text-align:center;">2</td>
+          <td style="text-align:center;">1</td>
+        </tr>
+        <tr style="background:var(--navy);color:var(--white);">
+          <td style="font-weight:600;border-bottom:none;">Puntaje ponderado total (sobre 5)</td>
+          <td style="text-align:center;font-weight:600;border-bottom:none;">100%</td>
+          <td style="text-align:center;background:var(--gold);color:var(--navy);font-weight:700;font-size:11px;border-bottom:none;">3.95</td>
+          <td style="text-align:center;border-bottom:none;">2.15</td>
+          <td style="text-align:center;border-bottom:none;">2.65</td>
+          <td style="text-align:center;border-bottom:none;">2.30</td>
+          <td style="text-align:center;border-bottom:none;">2.45</td>
+          <td style="text-align:center;border-bottom:none;">2.50</td>
+          <td style="text-align:center;border-bottom:none;">1.75</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="grid-2" style="gap:4mm;margin-top:auto;">
+      <div class="card card-gold">
+        <div class="card-title">Resultado</div>
+        <p class="slide-p" style="font-size:10.5px;">JHipster<sup>[1]</sup> obtuvo el puntaje más alto (<strong>3.95/5.00</strong>) destacando en cobertura full-stack y licenciamiento abierto. Aunque no ofrece soporte nativo BDD/TDD, su generación completa de código lo posiciona como la mejor opción evaluada.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Alternativas descartadas</div>
+        <p class="slide-p" style="font-size:10.5px;">Bootify.io<sup>[6]</sup> (2.65) y Mendix<sup>[9]</sup>/OutSystems<sup>[10]</sup> (2.50) ofrecen cobertura full-stack pero con restricciones de licenciamiento. Spring Initializr<sup>[5]</sup> y Telosys<sup>[8]</sup> carecen de generación completa de frontend y pruebas.</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <div class="slide-footer-l">Herramientas para la Industrialización del Desarrollo de Software - JHipster</div>
+    <div class="slide-footer-r">2026</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 19 - DIVISOR SECCIÓN 7: CONCLUSIONES
 ══════════════════════════════════════════════════════════ -->
 <div class="slide section-slide" style="position:relative;">
   <div class="section-inner">
     <div class="section-tag">Sección 07</div>
     <div class="section-accent"></div>
     <div class="section-title">Conclusiones</div>
-    <div class="section-desc">Síntesis de los resultados del caso de estudio y valoración de JHipster como herramienta de industrialización del desarrollo de software.</div>
+    <div class="section-desc">Síntesis de los resultados del caso de estudio<sup>[12]</sup> y valoración de JHipster<sup>[1]</sup> como herramienta de industrialización del desarrollo de software.</div>
   </div>
   <div class="section-num">07</div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════
-     SLIDE 19 - CONCLUSIONES
+     SLIDE 20 - CONCLUSIONES
 ══════════════════════════════════════════════════════════ -->
 <div class="slide">
   <div class="slide-header">
     <div class="slide-header-title">Conclusiones</div>
     <div class="slide-header-accent"></div>
-    <div class="slide-header-num">20</div>
+    <div class="slide-header-num">21</div>
   </div>
   <div class="slide-body">
     <div class="slide-section-tag">Sección 07 - Síntesis del caso de estudio</div>
@@ -1457,14 +1621,14 @@ npm run e2e
           <div class="concl-num">→</div>
           <div class="concl-body">
             <div class="concl-title">Productividad en scaffolding</div>
-            <div class="concl-text">JHipster generó en ~15 segundos una aplicación con 52.339 LOC en 348 archivos, cubriendo backend, frontend, base de datos, autenticación JWT, internacionalización y configuración Docker. El mayor aporte se concentró en las etapas iniciales del proyecto.</div>
+            <div class="concl-text">JHipster<sup>[1]</sup> generó en ~15 segundos una aplicación con 52.339 LOC en 348 archivos, cubriendo backend, frontend, base de datos, autenticación JWT, internacionalización y configuración Docker. El mayor aporte se concentró en las etapas iniciales del proyecto.</div>
           </div>
         </div>
         <div class="concl-item">
           <div class="concl-num">→</div>
           <div class="concl-body">
             <div class="concl-title">Desarrollo incremental efectivo</div>
-            <div class="concl-text">El enfoque de JDL único y acumulativo permitió implementar las 3 historias de usuario de forma ordenada, sin perder entidades previas ni relaciones ya establecidas entre ellas.</div>
+            <div class="concl-text">El enfoque de JDL<sup>[3]</sup> único y acumulativo permitió implementar las 3 historias de usuario de forma ordenada, sin perder entidades previas ni relaciones ya establecidas entre ellas.</div>
           </div>
         </div>
         <div class="concl-item">
@@ -1478,7 +1642,7 @@ npm run e2e
           <div class="concl-num">→</div>
           <div class="concl-body">
             <div class="concl-title">Curva de utilidad decreciente</div>
-            <div class="concl-text">La proporción de código generado vs. escrito manualmente disminuyó progresivamente al avanzar en la lógica de negocio. JHipster es más valioso al inicio y menos determinante en fases de implementación específica.</div>
+            <div class="concl-text">La proporción de código generado vs. escrito manualmente disminuyó progresivamente al avanzar en la lógica de negocio. JHipster<sup>[1]</sup> es más valioso al inicio y menos determinante en fases de implementación específica.</div>
           </div>
         </div>
       </div>
@@ -1507,6 +1671,81 @@ npm run e2e
         <div class="card card-gold">
           <div class="card-title">Repositorio del proyecto</div>
           <p class="slide-p" style="font-family:var(--mono);font-size:9px;word-break:break-all;color:#5a4010;">github.com/edwaraco/<br>ST1704_evergreen-distribucion</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <div class="slide-footer-l">Herramientas para la Industrialización del Desarrollo de Software - JHipster</div>
+    <div class="slide-footer-r">2026</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 21 - REFERENCIAS BIBLIOGRÁFICAS
+══════════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-header">
+    <div class="slide-header-title">Referencias bibliográficas</div>
+    <div class="slide-header-accent"></div>
+    <div class="slide-header-num">22</div>
+  </div>
+  <div class="slide-body">
+    <div class="slide-section-tag">Sección 08 - Formato IEEE</div>
+    <div class="slide-h1">Referencias</div>
+    <div class="grid-3" style="gap:4mm;font-size:9px;line-height:1.5;">
+      <div style="display:flex;flex-direction:column;gap:2.5mm;">
+        <div class="ref-item">
+          <span class="ref-num">[1]</span>
+          <span class="ref-text">JHipster Project, "JHipster – Full Stack Platform for the Modern Developer," 2026. [En línea]. Disponible en: <a href="https://www.jhipster.tech/" target="_blank" style="color:var(--accent);word-break:break-all;">https://www.jhipster.tech/</a></span>
+        </div>
+        <div class="ref-item">
+          <span class="ref-num">[2]</span>
+          <span class="ref-text">JHipster Project, "JDL Studio," 2026. [En línea]. Disponible en: <a href="https://start.jhipster.tech/jdl-studio" target="_blank" style="color:var(--accent);word-break:break-all;">https://start.jhipster.tech/jdl-studio</a></span>
+        </div>
+        <div class="ref-item">
+          <span class="ref-num">[3]</span>
+          <span class="ref-text">JHipster Project, "JHipster Domain Language (JDL)," 2026. [En línea]. Disponible en: <a href="https://www.jhipster.tech/jdl/intro" target="_blank" style="color:var(--accent);word-break:break-all;">https://www.jhipster.tech/jdl/intro</a></span>
+        </div>
+        <div class="ref-item">
+          <span class="ref-num">[4]</span>
+          <span class="ref-text">JHipster Project, "Creating an entity," 2026. [En línea]. Disponible en: <a href="https://www.jhipster.tech/creating-an-entity/" target="_blank" style="color:var(--accent);word-break:break-all;">https://www.jhipster.tech/creating-an-entity/</a></span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:2.5mm;">
+        <div class="ref-item">
+          <span class="ref-num">[5]</span>
+          <span class="ref-text">Spring, "Spring Initializr," 2026. [En línea]. Disponible en: <a href="https://start.spring.io/" target="_blank" style="color:var(--accent);word-break:break-all;">https://start.spring.io/</a></span>
+        </div>
+        <div class="ref-item">
+          <span class="ref-num">[6]</span>
+          <span class="ref-text">Bootify.io, "Spring Boot App Generator," 2026. [En línea]. Disponible en: <a href="https://bootify.io/" target="_blank" style="color:var(--accent);word-break:break-all;">https://bootify.io/</a></span>
+        </div>
+        <div class="ref-item">
+          <span class="ref-num">[7]</span>
+          <span class="ref-text">Yeoman, "The web's scaffolding tool for modern webapps," 2026. [En línea]. Disponible en: <a href="https://yeoman.io/" target="_blank" style="color:var(--accent);word-break:break-all;">https://yeoman.io/</a></span>
+        </div>
+        <div class="ref-item">
+          <span class="ref-num">[8]</span>
+          <span class="ref-text">Telosys, "The lightweight code generator," 2026. [En línea]. Disponible en: <a href="https://www.telosys.org/" target="_blank" style="color:var(--accent);word-break:break-all;">https://www.telosys.org/</a></span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:2.5mm;">
+        <div class="ref-item">
+          <span class="ref-num">[9]</span>
+          <span class="ref-text">Mendix, "Low Code Application Development Platform," 2026. [En línea]. Disponible en: <a href="https://www.mendix.com/" target="_blank" style="color:var(--accent);word-break:break-all;">https://www.mendix.com/</a></span>
+        </div>
+        <div class="ref-item">
+          <span class="ref-num">[10]</span>
+          <span class="ref-text">OutSystems, "Build Applications Fast, Right, and for the Future," 2026. [En línea]. Disponible en: <a href="https://www.outsystems.com/" target="_blank" style="color:var(--accent);word-break:break-all;">https://www.outsystems.com/</a></span>
+        </div>
+        <div class="ref-item">
+          <span class="ref-num">[11]</span>
+          <span class="ref-text">Node-RED, "Low-code programming for event-driven applications," 2026. [En línea]. Disponible en: <a href="https://nodered.org/" target="_blank" style="color:var(--accent);word-break:break-all;">https://nodered.org/</a></span>
+        </div>
+        <div class="ref-item">
+          <span class="ref-num">[12]</span>
+          <span class="ref-text">J. B. Quintero, "EverGreen: Caso de estudio – Macroproceso de distribución," 2026. [En línea]. Disponible en: <a href="https://drive.google.com/drive/folders/1McW21HdiROeXAPTvzrXi_qOcRnjZPmI0" target="_blank" style="color:var(--accent);word-break:break-all;">Google Drive</a></span>
         </div>
       </div>
     </div>
